@@ -22,6 +22,11 @@ app.get('/hello', (req, res) => {
   res.render('pages/index.ejs', ejsObject)
 });
 
+app.get('/searches/new', (req, res) => {
+  console.log(req.query);
+  res.render('pages/searches/new.ejs');
+})
+
 
 
 app.listen(PORT, () => console.log(`up on http://localhost:${PORT}`));
