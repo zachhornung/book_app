@@ -1,0 +1,2 @@
+INSERT INTO book (img, bookTitle, authors, book_description) VALUES ('http://books.google.com/books/content?id=-__ICQemqaEC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', 'Reading Harry Potter', 'David G. Epstein', 'book description 1 goes here.');
+INSERT INTO book (img, bookTitle, authors, book_description) VALUES ('http://books.google.com/books/content?id=ODOODwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api', 'The Harry Potter Generation', 'Emily Lauer', 'book description 2 goes here, too long.');
