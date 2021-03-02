@@ -5,14 +5,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel='stylesheet' href='./styles/reset.css'>
+  <link rel='stylesheet' href='./styles/base.css'>
+  <link rel='stylesheet' href='../../public/styles/layout.css'>
+  <link rel='stylesheet' href='../../public/styles/modules.css'>
 </head>
 <body>
-  <form action='/searches/new' method="GET">
-    search<input type='text' name='name'>
-
-    Title<input type='radio' value='title' name='search'>
-    Author<input type='radio' value='author' name='search'>
-    <input type='submit'>
-  </form>
+  <div>
+    <form action='/searches' method="POST">
+      search<input type='text' name='name'>
+      Title<input type='radio' value='title' name='search'>
+      Author<input type='radio' value='author' name='search'>
+      <input type='submit'>
+    </form>
+  </div>
 </body>
 </html>
