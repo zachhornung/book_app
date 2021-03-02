@@ -1,0 +1,12 @@
+
+li{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+header{
+  align-items: center;
+  justify-content: center;
+  font-size: xx-large;
+}
