@@ -14,5 +14,17 @@
   <div>
     <h1>WELCOME TO THE BOOK APP</h1>
   </div>
+  <ul>
+    <% for(let book in books){ %>
+    
+      <li>
+        <img src='<%= books[book].img%>'>
+        <h3><%= books[book].bookTitle %></h3>
+        <p><%= books[book].authors %></p>
+        <p><%= books[book].book_description %></p>
+      </li>
+      
+      <% } %>
+  </ul>
 </body>
 </html>

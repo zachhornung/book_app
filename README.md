@@ -1,10 +1,10 @@
 # book_app
 
-Number and name of feature: getting routes set up for book search, and css to link.
+Number and name of feature: getting data to save to database, making routes dynamic, making css for new pages.
 
 Estimated time needed to complete: 6 hrs
 
-start time: 2:32pm
+start time: 1:45pm
 
 Finish time:
 
