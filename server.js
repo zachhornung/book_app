@@ -38,6 +38,9 @@ app.post('/searches', (req, res) => {
       console.log(books);
       // need to make the books and pass them in
       res.render('pages/searches/show.ejs', {books: books}); // need to pass in the books from the constructor
+    }).catch(error => {
+      res.render('/error.ejs');
+      console.log(error);
     });
 });
 
@@ -47,6 +50,7 @@ function Book(bookResults){
   this.authors = bookResults.volumeInfo.authors;
   this.description = bookResults.volumeInfo.description;
 }
+
 
 
 
