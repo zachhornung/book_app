@@ -18,9 +18,6 @@ app.use(express.static(__dirname + '/public'));
 
 
 app.get('/', (req, res) => {
-  // const ejsObject = {teacher: 'nicholas', course: '301d71'};
-  // res.render('pages/index.ejs', ejsObject);
-
   const sqlString = 'SELECT * FROM book;';
   client.query(sqlString).then(result => {
     const ejsObject = {books: result.rows};
@@ -28,25 +25,34 @@ app.get('/', (req, res) => {
   });
 });
 
+app.get('/books/:id', (req, res) => {
+
+});
+
+app.post('/books', (req, res) => {
+  const sqlString = 'INSERT INTO book (img, bookTitle, authors, book_description, isbn) VALUES ($1, $2, $3, $4, $5) RETURNING id';
+  const sqlArray = [req.body.img, req.body.bookTitle, req.body.authors, req.body.book_description, req.body.isbn];
+  client.query(sqlString, sqlArray).then(result => {
+    console.log(result);
+    const ejsObject = {books: req.body}
+    res.render('pages/books/detail.ejs', ejsObject);
+  });
+});
+
 
 app.get('/searches/new', (req, res) => {
-  console.log(req.query);
   res.render('pages/searches/new.ejs');
 }); 
 
-const sample = [];
 app.post('/searches', (req, res) => {
   const url = `https://www.googleapis.com/books/v1/volumes?q=in${req.body.search}:${req.body.name}`;
-  console.log(req.body);
   superagent.get(url)
     .then(results => {
       const books = results.body.items.map(book => new Book(book));
-      sample.push(books);
-      console.log(sample);
       // need to make the books and pass them in
       res.render('pages/searches/show.ejs', {books: books}); // need to pass in the books from the constructor
     }).catch(error => {
-      res.render('/error.ejs');
+      res.render('pages/error.ejs');
       console.log(error);
     });
 });
@@ -59,6 +65,7 @@ function Book(bookResults){
     return acc;
   }, '').slice(2);
   this.book_description = bookResults.volumeInfo.description ? bookResults.volumeInfo.description : 'Sorry, no description available.';
+  this.isbn = bookResults.volumeInfo.industryIdentifiers ? bookResults.volumeInfo.industryIdentifiers[0].identifier : 'No ISBN Available' ;
 }
 
 
