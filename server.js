@@ -20,8 +20,10 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', (req, res) => {
   const sqlString = 'SELECT * FROM book;';
   client.query(sqlString).then(result => {
-    const ejsObject = {books: result.rows[0]};
-    res.render('pages/index.ejs', ejsObject);
+    console.log(result.rows)
+    // const ejsObject = {books: result.rows[0]};
+    // console.log(ejsObject.books);
+    res.render('pages/index.ejs', {books: result.rows});
   });
 });
 
