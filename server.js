@@ -20,20 +20,25 @@ app.use(express.static(__dirname + '/public'));
 app.get('/', (req, res) => {
   const sqlString = 'SELECT * FROM book;';
   client.query(sqlString).then(result => {
-    const ejsObject = {books: result.rows};
+    const ejsObject = {books: result.rows[0]};
     res.render('pages/index.ejs', ejsObject);
   });
 });
 
 app.get('/books/:id', (req, res) => {
-
+  console.log(req.params);
+  const sqlString = 'SELECT * FROM book WHERE id = $1'
+  const sqlArr = [req.params.id];
+  client.query(sqlString, sqlArr).then(result => {
+    const ejsObject = {books: result.rows[0]};
+    res.render('pages/books/detail.ejs', ejsObject);
+  });
 });
 
 app.post('/books', (req, res) => {
   const sqlString = 'INSERT INTO book (img, bookTitle, authors, book_description, isbn) VALUES ($1, $2, $3, $4, $5) RETURNING id';
   const sqlArray = [req.body.img, req.body.bookTitle, req.body.authors, req.body.book_description, req.body.isbn];
   client.query(sqlString, sqlArray).then(result => {
-    console.log(result);
     const ejsObject = {books: req.body}
     res.render('pages/books/detail.ejs', ejsObject);
   });
