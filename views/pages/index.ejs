@@ -23,6 +23,14 @@
         <h3><%= books[book].bookTitle %></h3>
         <p><%= books[book].authors %></p>
         <p><%= books[book].book_description %></p>
+        <form action='/books/<%= books[book].id %>' method='GET'>
+          <input type='hidden' name='img' value='<%= books[book].img%>'>
+          <input type='hidden' name='bookTitle' value='<%= books[book].bookTitle%>'>
+          <input type='hidden' name='authors' value='<%= books[book].authors%>'>
+          <input type='hidden' name='book_description' value='<%= books[book].book_description%>'>
+          <input type='hidden' name='isbn' value='<%= books[book].isbn%>'>
+          <input type='submit' value ='View Details'>
+        </form>
       </li>
       
       <% } %>
