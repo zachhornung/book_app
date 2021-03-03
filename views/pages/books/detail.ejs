@@ -19,6 +19,23 @@
         <p><%= books.authors %></p>
         <p><%= books.book_description %></p>
         <p><%=books.isbn%></p>
+        <a href='/'><button>Back to Home</button></a>
+        <form action='/books/<%= books.id %>?_method=PUT' method='POST'>
+          <label>Image URL:</label>
+          <input type='text' name='img' value='<%= books.img%>'>
+          <label>Book Title:</label>
+          <input type='text' name='bookTitle' value='<%= books.bookTitle%>'>
+          <label>Authors:</label>
+          <input type='text' name='authors' value='<%= books.authors%>'>
+          <label>Book Description:</label>
+          <input type='text' name='book_description' value='<%= books.book_description%>'>
+          <label>ISBN:</label>
+          <input type='text' name='isbn' value='<%= books.isbn%>'>
+          <input type='submit' value ='Update Details'>
+        </form>
+        <form action='/books/<%= books.id %>?_method=DELETE' method='POST'>
+          <input type='submit' value='Delete This book'>
+        </form>
       </li>
   </ul>
 </body>
