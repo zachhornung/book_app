@@ -21,6 +21,9 @@ app.get('/', (req, res) => {
   const sqlString = 'SELECT * FROM book;';
   client.query(sqlString).then(result => {
     res.render('pages/index.ejs', {books: result.rows});
+  }).catch(error => {
+    res.render('pages/error.ejs');
+    console.log(error);
   });
 });
 
@@ -30,6 +33,9 @@ app.get('/books/:id', (req, res) => {
   client.query(sqlString, sqlArr).then(result => {
     const ejsObject = {books: result.rows[0]};
     res.render('pages/books/detail.ejs', ejsObject);
+  }).catch(error => {
+    res.render('pages/error.ejs');
+    console.log(error);
   });
 });
 
@@ -40,6 +46,9 @@ app.post('/books', (req, res) => {
     const ejsObject = {books: req.body};
     ejsObject.books.id = result.rows[0].id;
     res.render('pages/books/detail.ejs', ejsObject);
+  }).catch(error => {
+    res.render('pages/error.ejs');
+    console.log(error);
   });
 });
 
@@ -65,7 +74,10 @@ app.put('/books/:id', (req, res) => {
   const sqlArr = [req.body.img, req.body.bookTitle, req.body.authors, req.body.book_description, req.body.isbn, req.params.id];
   client.query(sqlString, sqlArr).then(result => {
     res.redirect(`/books/${req.params.id}`);
-  })
+  }).catch(error => {
+    res.render('pages/error.ejs');
+    console.log(error);
+  });
 });
 
 app.delete('/books/:id', (req, res) => {
@@ -73,16 +85,19 @@ app.delete('/books/:id', (req, res) => {
   const sqlArr = [req.params.id];
   client.query(sqlString, sqlArr).then(result => {
     res.redirect('/');
-  })
+  }).catch(error => {
+    res.render('pages/error.ejs');
+    console.log(error);
+  });
 })
 
 function Book(bookResults){
   this.img = bookResults.volumeInfo.imageLinks ? bookResults.volumeInfo.imageLinks.smallThumbnail: "https://i.imgur.com/J5LVHEL.jpg";
   this.bookTitle = bookResults.volumeInfo.title;
-  this.authors = bookResults.volumeInfo.authors.reduce((acc, curr) => {
+  this.authors = bookResults.volumeInfo.authors ? bookResults.volumeInfo.authors.reduce((acc, curr) => {
     acc += (', ' + curr);
     return acc;
-  }, '').slice(2);
+  }, '').slice(2) : 'No Authors Available'
   this.book_description = bookResults.volumeInfo.description ? bookResults.volumeInfo.description : 'Sorry, no description available.';
   this.isbn = bookResults.volumeInfo.industryIdentifiers ? bookResults.volumeInfo.industryIdentifiers[0].identifier : 'No ISBN Available' ;
 }
